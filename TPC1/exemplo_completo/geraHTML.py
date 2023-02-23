@@ -52,12 +52,14 @@ for c in cidades:
             if existe == 0 :
                 existe = 1
                 pagHTML += f"""
-                <p><b>Destinos possiveis:</b></p>
+                    <p><b>Destinos possiveis:</b></p>
             """
-
-            pagHTML += f"""
-                    <p><b>Cidade:</b> {l['destino']}({l['distância']} Km)</p>
-            """
+            for ci in cidades:
+                if ci['id'] == l['destino']:
+                    pagHTML += f"""
+                    <p> • {ci['nome']}({l['distância']} Km)</p>
+                    """
+                    break
     pagHTML += f""" 
                     <address>[<a href="#indice">Voltar ao índice</a>]</address>
                     <center>
@@ -72,5 +74,6 @@ pagHTML += """
     </body>
 </html>
 """
-
+path = 'E:\github\DSSbackup\web2023\TPC1\exemplo_completo\mapa.html'
+sys.stdout = open(path, 'w',encoding="utf-8")
 print(pagHTML)
