@@ -4,7 +4,7 @@ import sys
 def ordCidade(cidade):
     return cidade['nome']
 
-f = open("mapa.json")
+f = open("mapa.json",encoding='utf-8')
 mapa = json.load(f)
 cidades = mapa['cidades']
 cidades.sort(key=ordCidade)
@@ -41,7 +41,7 @@ pagHTML += """
 for c in cidades:
     pagHTML += f"""
                     <a name="{c['id']}"/>
-                    <h3>{c['nome']}oiii</h3>
+                    <h3>{c['nome']}</h3>
                     <p><b>Distrito:</b> {c['distrito']}</p>
                     <p><b>População:</b> {c['população']}</p>
                     <p><b>Descrição:</b> {c['descrição']}</p>
@@ -56,11 +56,10 @@ for c in cidades:
             """
 
             pagHTML += f"""
-                    <p><b>Cidade:</b> {l['destino']}</p>
-                    <p><b>Distancia:</b> {l['distância']}</p>
+                    <p><b>Cidade:</b> {l['destino']}({l['distância']} Km)</p>
             """
     pagHTML += f""" 
-                    <adress>[<a href="#indice">Voltar ao índice</a>]</address>
+                    <address>[<a href="#indice">Voltar ao índice</a>]</address>
                     <center>
                         <hr width="80%"/>
                     </center>
@@ -73,6 +72,5 @@ pagHTML += """
     </body>
 </html>
 """
-path = '.\mapa.html'
-sys.stdout = open(path, 'w')
+
 print(pagHTML)
