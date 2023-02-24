@@ -1,0 +1,11 @@
+.texto_normal{
+    padding: 60px;
+}
+
+.texto_anormal{
+    padding-left: 40px;
+}
+
+body{
+    background-color:blanchedalmond;
+}
