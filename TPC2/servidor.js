@@ -1,5 +1,4 @@
 var http = require('http')
-var meta = require('./au')
 var url = require('url')
 var fs = require('fs')
 
@@ -8,7 +7,7 @@ var myServer = http.createServer(function(req,res){
 
     var q = url.parse(req.url,true) 
 
-    fs.readFile("pag"+q.pathname.substring(1)+".html",function(err,data){
+    fs.readFile("cidades/"+q.pathname.substring(1)+".html",function(err,data){
         res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'})
         if(err){
             res.write("ERRO: na leitura do ficheiro :: " + err)

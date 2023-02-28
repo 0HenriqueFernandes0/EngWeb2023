@@ -29,7 +29,7 @@ pagHTML = """
 """
 
 for c in cidades:
-    pagHTML += f"<li><a href='/{c['id']}'>{c['nome']}</a></li>"
+    pagHTML += f"<li><a href='#{c['id']}'>{c['nome']}</a></li>"
 
 pagHTML += """
 </ol>
@@ -38,34 +38,7 @@ pagHTML += """
                 <td width="70%">
 """
 
-pagHTML += """
-                </td>
-            </tr>
-        </table>
-    </body>
-</html>
-"""
-path = 'E:\github\DSSbackup\web2023\TPC2\cidades\index.html'
-sys.stdout = open(path, 'w',encoding="utf-8")
-print(pagHTML)
-
 for c in cidades:
-    pagHTML = """
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Mapa Virtual</title>
-        <meta charset="utf-8"/>
-    </head>
-    <body>
-        <h1>Mapa Virtual</h1>
-        <table>
-            <tr>
-                <!-- Coluna do índice -->
-                <td width="30%" valign="top">
-                    <a name="indice"/>
-                    <ol>
-"""
     pagHTML += f"""
                     <a name="{c['id']}"/>
                     <h3>{c['nome']}</h3>
@@ -88,19 +61,13 @@ for c in cidades:
                     """
                     break
     pagHTML += f""" 
-                    <address>[<a href="/index">Voltar ao índice</a>]</address>
+                    <address>[<a href="#indice">Voltar ao índice</a>]</address>
                     <center>
                         <hr width="80%"/>
                     </center>
     """
 
-    pagHTML += """
-                    </td>
-                </tr>
-            </table>
-        </body>
-    </html>
-    """
-    path = f"E:\github\DSSbackup\web2023\TPC2\cidades\{c['id']}.html"
-    sys.stdout = open(path, 'w',encoding="utf-8")
-    print(pagHTML)
+
+path = f"E:\github\DSSbackup\web2023\TPC1\exemplo_completo\mapa.html"
+sys.stdout = open(path, 'w',encoding="utf-8")
+print(pagHTML)
