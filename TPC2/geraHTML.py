@@ -2,7 +2,7 @@ import json
 import sys
 
 def ordCidade(cidade):
-    return cidade['nome']
+    return cidade['distrito']
 
 f = open("mapa.json",encoding='utf-8')
 mapa = json.load(f)
@@ -28,7 +28,11 @@ pagHTML = """
                     <ol>
 """
 
+distrito = ""
 for c in cidades:
+    if c['distrito'] != distrito:
+        distrito = c['distrito']
+        pagHTML += f"<p><b>Distrito:</b> {distrito} </p>"
     pagHTML += f"<li><a href='/{c['id']}'>{c['nome']}</a></li>"
 
 pagHTML += """
@@ -84,7 +88,7 @@ for c in cidades:
             for ci in cidades:
                 if ci['id'] == l['destino']:
                     pagHTML += f"""
-                    <p> • {ci['nome']}({l['distância']} Km)</p>
+                    <p> • <a href="/{ci['id']}">{ci['nome']}</a>({l['distância']} Km)</p>
                     """
                     break
     pagHTML += f""" 
