@@ -49,7 +49,7 @@ pagHTML += """
     </body>
 </html>
 """
-path = 'E:\github\DSSbackup\web2023\TPC2\cidades\index.html'
+path = 'E:\github\DSSbackup\web2023\TPC2\index.html'
 sys.stdout = open(path, 'w',encoding="utf-8")
 print(pagHTML)
 
