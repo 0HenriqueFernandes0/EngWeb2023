@@ -64,7 +64,7 @@ exports.genMainPage = function(lista, data){
                         <th>Cidade</th>
                     </tr>
                 `
-    lista
+    
     for(let i=0; i < lista.length; i++){
         pagHTML += `
         <tr>
@@ -108,7 +108,38 @@ exports.genPersonPage = function(p, d){
                 </header>
 
                 <div class="container">
-                    <p>Preencher com os outros campos...</p>
+                    <table class="w3-table-all">
+    `
+    chaves = Object.keys(p)
+    for(let i = 0;i<chaves.length;i++){
+        pagHTML+=`  <tr>
+                        <td>${chaves[i]}</td>
+        `
+        let x = p[chaves[i]]
+        if(typeof(x)=="string" ||typeof(x)=="number"){
+            pagHTML+=`
+                        <td>${x}</td>
+                    </tr>`
+        }else if(Array.isArray(x)){
+            pagHTML+=`<td>`
+            for (let j = 0; j < x.length-1; j++) {
+                pagHTML+=` ${x[j]},`
+            }
+            pagHTML+=` ${x[x.length-1]}.</td>
+            </tr>`
+        }else{
+            keys = Object.keys(x)
+            for(let j = 0;j<keys.length;j++){
+                console.log(keys[j])
+                pagHTML+=`<td>${keys[j]}:${x[keys[j]]}</td>`
+            }
+            pagHTML+=`</tr>`
+        }
+
+    }
+    pagHTML+=
+                `
+                    </table>
                 </div>
                 
                 <footer class="w3-container w3-purple">
@@ -121,7 +152,7 @@ exports.genPersonPage = function(p, d){
     return pagHTML
 }
 
-exports.genDistriPage = function(pessoas, data, tipo){
+exports.genDistriPage = function(pessoas, data, tipo,n){
     var pagHTML = `
     <!DOCTYPE html>
     <html>
@@ -139,15 +170,16 @@ exports.genDistriPage = function(pessoas, data, tipo){
                 <div class="w3-container">
                     <table class="w3-table-all">
             `
-    lista = distribuicao(pessoas,tipo)
-    chaves =  Object.keys(lista)
+    let lista = Object.entries(distribuicao(pessoas,tipo)).sort((a, b) => b[1] - a[1] || (a > b ? 1:-1));
 
-    for(let i=0; i < chaves.length; i++){
+    if(n==-1) n = lista.length
+    
+    for(let i=0; i < n; i++){
         pagHTML += `
         <tr>
-            <td>${chaves[i]}</td>
+            <td>${lista[i][0]}</td>
             <td>
-                <a href="/distribuicao/${tipo}/${chaves[i]}">${lista[chaves[i]]}</a>
+                <a href="/distribuicao/${tipo}/${lista[i][0]}">${lista[i][1]}</a>
             </td>
         <tr>
         `

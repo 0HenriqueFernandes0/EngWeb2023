@@ -40,15 +40,3 @@ exports.filter = function(pessoas, tipoGeral, tipo){
     }
     return countsType
 }
-
-exports.top_N= function(pessoas,tipo,n){
-    const { distribuicao} = require('./distribuiçoes')
-    let counts = distribuicao(pessoas,tipo)
-    let lista = Object.entries(counts).sort((a, b) => a[1] < b[1] ? 1 : -1);
-    let listaf = []
-    for (i = 0;i<n;i++){
-        listaf.push(lista[i])
-    }
-    console.log(listaf)
-    return(listaf)
-}
