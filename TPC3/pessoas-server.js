@@ -74,7 +74,7 @@ http.createServer(function (req, res) {
             .then(function(resp){
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.write(mypages.genDistriPage(pessoas, d,tipo[2],tipo[1]))
+                res.write(mypages.genDistriPage(pessoas, d,tipo[2],decodeURIComponent(tipo[1])))
                 res.end()
             })
             .catch(erro => {
@@ -89,7 +89,7 @@ http.createServer(function (req, res) {
             .then(function(resp){
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.write(mypages.genMainPage(filter(pessoas,tipo[0],tipo[1]), d))
+                res.write(mypages.genMainPage(filter(pessoas,tipo[0],decodeURIComponent(tipo[1])), d))
                 res.end()
             })
             .catch(erro => {

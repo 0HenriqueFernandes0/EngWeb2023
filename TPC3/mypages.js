@@ -52,6 +52,7 @@ exports.genMainPage = function(lista, data){
             <div class="w3-card-4">
                 <header class="w3-container w3-purple">
                     <h1>Lista de Pessoas</h1>
+                    <h4 align="right"><a href="/">Home</a><h4>
                 </header>
         
                 <div class="w3-container">
@@ -105,6 +106,7 @@ exports.genPersonPage = function(p, d){
             <div class="w3-card-4">
                 <header class="w3-container w3-purple">
                     <h1>${p.nome}</h1>
+                    <h4 align="right"><a href="/">Home</a><h4>
                 </header>
 
                 <div class="container">
@@ -130,7 +132,6 @@ exports.genPersonPage = function(p, d){
         }else{
             keys = Object.keys(x)
             for(let j = 0;j<keys.length;j++){
-                console.log(keys[j])
                 pagHTML+=`<td>${keys[j]}:${x[keys[j]]}</td>`
             }
             pagHTML+=`</tr>`
@@ -164,7 +165,8 @@ exports.genDistriPage = function(pessoas, data, tipo,n){
         <body>
             <div class="w3-card-4">
                 <header class="w3-container w3-purple">
-                    <h1>Lista de Pessoas</h1>
+                    <h1>Lista de ${tipo}</h1>
+                    <h4 align="right"><a href="/">Home</a><h4>
                 </header>
         
                 <div class="w3-container">
