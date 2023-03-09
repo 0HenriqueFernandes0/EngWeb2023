@@ -74,7 +74,7 @@ http.createServer(function (req, res) {
             .then(function(resp){
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.write(mypages.genMainPage(top_N(pessoas,tipo[1],tipo[2]), d))
+                res.write(mypages.genDistriPage(top_N(pessoas,tipo[1],tipo[2]), d,tipo[1]))
                 res.end()
             })
             .catch(erro => {
