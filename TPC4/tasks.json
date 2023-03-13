@@ -1,3 +1,10 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id" : 1,
+      "nome" : "Henrique",
+      "DateTask":"15-03-2023",
+      "TaskDescription":"lavar a roupa"
+    }
+  ]
 }

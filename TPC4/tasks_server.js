@@ -7,6 +7,7 @@ var axios = require('axios')
 var templates = require('./templates')
 var static = require('./static.js')
 const { parse } = require('querystring');
+const { match } = require('assert');
 
 // Aux functions
 function collectRequestBodyData(request, callback) {
@@ -55,9 +56,13 @@ var alunosServer = http.createServer(function (req, res) {
                         })
                 }
                 // GET /alunos/:id --------------------------------------------------------------------
-                else if(/\/alunos\/(A|PG)[0-9]+$/i.test(req.url)){
-                    var idAluno = req.url.split("/")[2]
-                    axios.get("http://localhost:3000/alunos/" + idAluno)
+                else if(/\/?nome=([^&]*)&TaskDescription=([^&]*)&DateTask=(\d{4}-\d{2}-\d{2})$/i.test(req.url)){
+                    var variaveis = req.url.split("&")
+                    task={}
+                    task["nome"]=variaveis[0].split("=")[1]
+                    task["TaskDescription"]=variaveis[1].split("=")[1]
+                    task["DateTask"]=variaveis[2].split("=")[1]
+                    axios.get("http://localhost:3000/tasks")
                         .then( response => {
                             let a = response.data
                             // Add code to render page with the student record
