@@ -12,7 +12,7 @@ exports.taskListPage = function(slist, d){
                     <h1>Input task</h1>
                 </div>
             
-                <form class="w3-container">
+                <form class="w3-container" method="post">
                     <label class="w3-text-teal"><b>Nome</b></label>
                     <input class="w3-input w3-border w3-light-grey" name="nome"type="text" value="">
                 
@@ -21,7 +21,8 @@ exports.taskListPage = function(slist, d){
                     
                     <label class="w3-text-teal"><b>Choose the date limit to do the task</b></label>
                     <input class="w3-input w3-border w3-light-grey" type="date" name="DateTask" min="`+d.split("T")[0]+`" value=""/>
-                
+                    
+                    
                     <button class="w3-btn w3-blue-grey" type="submit">Submit</button>
                 </form>
 

@@ -51,25 +51,11 @@ var alunosServer = http.createServer(function (req, res) {
                         })
                         .catch(function(erro){
                             res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Não foi possível obter a lista de alunos... Erro: " + erro)
+                            res.write("<p>Não foi possível obter a lista de tasks... Erro: " + erro)
                             res.end()
                         })
                 }
                 // GET /alunos/:id --------------------------------------------------------------------
-                else if(/\/?nome=([^&]*)&TaskDescription=([^&]*)&DateTask=(\d{4}-\d{2}-\d{2})$/i.test(req.url)){
-                    var variaveis = req.url.split("&")
-                    task={}
-                    task["nome"]=variaveis[0].split("=")[1]
-                    task["TaskDescription"]=variaveis[1].split("=")[1]
-                    task["DateTask"]=variaveis[2].split("=")[1]
-                    axios.get("http://localhost:3000/tasks")
-                        .then( response => {
-                            let a = response.data
-                            // Add code to render page with the student record
-                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.end(templates.studentPage(a, d))
-                        })
-                }
                 // GET /alunos/registo --------------------------------------------------------------------
                 else if(req.url == "/alunos/registo"){
                     // Add code to render page with the student form
@@ -114,10 +100,10 @@ var alunosServer = http.createServer(function (req, res) {
                 }
                 break
             case "POST":
-                if(req.url == '/alunos/registo'){
+                if(req.url == '/tasks'){
                     collectRequestBodyData(req, result => {
                         if(result){
-                            axios.post('http://localhost:3000/alunos', result)
+                            axios.post('http://localhost:3000/tasks', result)
                                 .then(resp => {
                                     console.log(resp.data);
                                     res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
@@ -137,6 +123,30 @@ var alunosServer = http.createServer(function (req, res) {
                             res.end()
                         }
                     })
+                }
+                else if(/\/?nome=([^&]*)&TaskDescription=([^&]*)&DateTask=(\d{4}-\d{2}-\d{2})$/i.test(req.url)){
+                    collectRequestBodyData(req, result => {
+                        if(result){
+                            console.dir(result)
+                            axios.put('http://localhost:3000/alunos/' + result.id, result)
+                                .then(resp => {
+                                    console.log(resp.data);
+                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                    // res.write(studentFormPage(d))
+                                    res.end('<p>Registo alterado:' + JSON.stringify(resp.data)  + '</p>')
+                                })
+                                .catch(error => {
+                                    console.log('Erro: ' + error);
+                                    res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.end(templates.errorPage("Unable to insert record...", d))
+                                });
+                        }
+                        else{
+                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write("<p>Unable to collect data from body...</p>")
+                            res.end()
+                        }
+                    });
                 }
                 else if(/\/alunos\/edit\/(A|PG)[0-9]+$/i.test(req.url)){
                     collectRequestBodyData(req, result => {

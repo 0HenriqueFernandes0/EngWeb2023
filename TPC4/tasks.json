@@ -1,10 +1,29 @@
 {
   "tasks": [
     {
-      "id" : 1,
-      "nome" : "Henrique",
-      "DateTask":"15-03-2023",
-      "TaskDescription":"lavar a roupa"
+      "id": 1,
+      "nome": "Henrique",
+      "DateTask": "15-03-2023",
+      "TaskDescription": "lavar a roupa"
+    },
+    {
+      "nome": "Henrique",
+      "TaskDescription": "cozinhar",
+      "DateTask": "2023-03-14",
+      "id": 2
+    },
+    {
+      "nome": "Rui",
+      "TaskDescription": "aaaa",
+      "DateTask": "2023-03-29",
+      "id": 3
+    },
+    {
+      "nome": "Henrique",
+      "TaskDescription": "cozinhar11",
+      "DateTask": "2023-03-25",
+      "id": 4
     }
-  ]
+  ],
+  "tasks_done": []
 }
