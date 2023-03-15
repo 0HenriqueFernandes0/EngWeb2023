@@ -4,13 +4,15 @@
       "id": 1,
       "nome": "Henrique",
       "DateTask": "15-03-2023",
-      "TaskDescription": "lavar a roupa"
+      "TaskDescription": "lavar a roupa",
+      "Done": 0
     },
     {
       "nome": "Henrique",
       "TaskDescription": "cozinhar",
       "DateTask": "2023-03-14",
-      "id": 2
+      "id": 2,
+      "Done": 1
     },
     {
       "nome": "Rui",
@@ -23,6 +25,19 @@
       "TaskDescription": "cozinhar11",
       "DateTask": "2023-03-25",
       "id": 4
+    },
+    {
+      "nome": "Rui",
+      "TaskDescription": "barrer",
+      "DateTask": "2023-03-28",
+      "id": 5
+    },
+    {
+      "nome": "Rui",
+      "TaskDescription": "aspirar",
+      "DateTask": "2023-03-29",
+      "Done": "0",
+      "id": 6
     }
   ],
   "tasks_done": []

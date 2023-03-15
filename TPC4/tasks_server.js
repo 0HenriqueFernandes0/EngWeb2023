@@ -100,7 +100,7 @@ var alunosServer = http.createServer(function (req, res) {
                 }
                 break
             case "POST":
-                if(req.url == '/tasks'){
+                if((req.url == "/") || (req.url == "/tasks")){
                     collectRequestBodyData(req, result => {
                         if(result){
                             axios.post('http://localhost:3000/tasks', result)
