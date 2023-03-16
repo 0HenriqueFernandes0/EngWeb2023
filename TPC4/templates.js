@@ -34,29 +34,27 @@ exports.taskListPage = function(slist, d){
                 <div class="w3-row">
                     <div class="w3-col w3-container m6 l6">
                         <table class="w3-table-all">
-                            <form class="w3-container" method="post">
-                                <tr>
-                                    <th>Nome</th><th>Task Description</th><th>DateTask</th>
-                                </tr>
+                            <tr>
+                                <th>Nome</th><th>Task Description</th><th>DateTask</th>
+                            </tr>
                 `
     for(let i=0; i < slist.length ; i++){
         if(slist[i]["Done"]==0){
             pagHTML += `
                 <tr>
-                    <td><input class="w3-check" type="checkbox" checked="checked" name="Done" value="1"/>${slist[i].nome}</td>
-                    <td><input class="w3-input w3-round" type="text" name="id" readonly value="${slist[i].TaskDescription}"/></td>
-                    <td><input class="w3-input w3-round" type="text" name="id" readonly value="${slist[i].DateTask}"/></td>
+                    <td>${slist[i].nome}</td>
+                    <td>${slist[i].TaskDescription}</td>
+                    <td>${slist[i].DateTask}</td>
+                    <td>
+                        <a href="/tasks/Done/${slist[i].id}" class="button w3-btn w3-blue w3-mb-2" type="submit">Done</a>
+                        <a href="/tasks/Edit/${slist[i].id}" class="button w3-btn w3-blue w3-mb-2" type="submit">Edit</a>
+                        <a href="/tasks/Delete/${slist[i].id}" class="button w3-btn w3-blue w3-mb-2" type="submit">Delete</a>
+                    </td>
                 </tr>
         `
         }
     }
-    pagHTML+=`                  <tr>
-                                    <td>
-                                        <button class="w3-btn w3-blue w3-mb-2" type="submit">Done</button>
-                                        <button class="w3-btn w3-blue w3-mb-2" type="submit">Edit</button>
-                                    </td>
-                                </td>
-                            </form>
+    pagHTML+=`
                         </table>
                         <p/>
                 </div>
@@ -71,9 +69,11 @@ exports.taskListPage = function(slist, d){
             pagHTML += `
             <tr>
                 <td>${slist[i].nome}</td>
-                <td>${slist[i].TaskDescription}
-                </td>
-                <td>${slist[i].DateTask}
+                <td>${slist[i].TaskDescription}</td>
+                <td>${slist[i].DateTask}</td>
+                <td>
+                    <a href="/tasks/Edit/${slist[i].id}" class="button w3-btn w3-blue w3-mb-2" type="submit">Edit</a>
+                    <a href="/tasks/Delete/${slist[i].id}" class="button w3-btn w3-blue w3-mb-2" type="submit">Delete</a>
                 </td>
             </tr>
     `
@@ -95,66 +95,7 @@ exports.taskListPage = function(slist, d){
     return pagHTML
 }
 
-
-exports.studentFormPage = function(d){
-    return `
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="UTF-8"/>
-            <link rel="icon" href="favicon.png"/>
-            <link rel="stylesheet" href="w3.css"/>
-            <title>Student Form</title>
-        </head>
-        <body>
-            <div class="w3-card-4">
-                <header class="w3-container w3-purple">
-                    <h2>Student Form</h2>
-                </header>
-            
-                <form class="w3-container" method="POST">
-                    <fieldset>
-                        <legend>Metadata</legend>
-                        <label>Id</label>
-                        <input class="w3-input w3-round" type="text" name="id"/>
-                        <label>Name</label>
-                        <input class="w3-input w3-round" type="text" name="nome"/>
-                        <label>Git</label>
-                        <input class="w3-input w3-round" type="text" name="gitlink"/>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>TPC</legend>
-                        <input class="w3-check" type="checkbox" name="tpc1" value="1"/>
-                        <label>TPC1</label>
-                        <input class="w3-check" type="checkbox" name="tpc2" value="1"/>
-                        <label>TPC2</label>
-                        <input class="w3-check" type="checkbox" name="tpc3" value="1"/>
-                        <label>TPC3</label>
-                        <input class="w3-check" type="checkbox" name="tpc4" value="1"/>
-                        <label>TPC4</label>
-                        <input class="w3-check" type="checkbox" name="tpc5" value="1"/>
-                        <label>TPC5</label>
-                        <input class="w3-check" type="checkbox" name="tpc6" value="1"/>
-                        <label>TPC6</label>
-                        <input class="w3-check" type="checkbox" name="tpc7" value="1"/>
-                        <label>TPC7</label>
-                        <input class="w3-check" type="checkbox" name="tpc8" value="1"/>
-                        <label>TPC8</label>
-                    </fieldset>  
-                    <br/>
-                    <button class="w3-btn w3-purple w3-mb-2" type="submit">Register</button>
-                </form>
-
-                <footer class="w3-container w3-purple">
-                    <h5>Generated by EngWeb2023 in ${d} - [<a href="/">Return</a>]</h5>
-                </footer>
-            
-            </div>
-    `
-}
-
-exports.studentFormEditPage = function(a, d){
+exports.tasksEditPage = function(a, d){
     var pagHTML = `
     <!DOCTYPE html>
     <html>
@@ -173,36 +114,17 @@ exports.studentFormEditPage = function(a, d){
                 <form class="w3-container" method="POST">
                     <fieldset>
                         <legend>Metadata</legend>
-                        <label>Id</label>
-                        <input class="w3-input w3-round" type="text" name="id" readonly value="${a.id}"/>
                         <label>Name</label>
                         <input class="w3-input w3-round" type="text" name="nome" value="${a.nome}"/>
-                        <label>Git</label>
-                        <input class="w3-input w3-round" type="text" name="gitlink" value="${a.gitlink}"/>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>TPC</legend>
-                    `
-
-    for(i=1; i < 9; i++){
-        var tpc = "tpc" + i
-        if(tpc in a){
-            pagHTML += `<input class="w3-check" type="checkbox" name="tpc${i}" value="1" checked/>
-                        <label>TPC${i}</label>
-                        `
-        }
-        else{
-            pagHTML += `<input class="w3-check" type="checkbox" name="tpc${i}" value="1"/>
-                        <label>TPC${i}</label>
-                        `
-        }
-    }                
-
-    pagHTML += `
+                        <label>TaskDescription</label>
+                        <input class="w3-input w3-round" type="text" name="TaskDescription" value="${a.TaskDescription}"/>
+                        <label>DateTask</label>
+                        <input class="w3-input w3-round" type="text" name="DateTask" value="${a.DateTask}"/>
+                        <label>Done(1-Verdadeiro,0-falso)</label>
+                        <input class="w3-input w3-round" type="text" name="Done" value="${a.Done}"/>
                     </fieldset>  
                     <br/>
-                    <button class="w3-btn w3-purple w3-mb-2" type="submit">Register</button>
+                    <button class="w3-btn w3-purple w3-mb-2" type="submit">Edit</button>
                 </form>
 
                 <footer class="w3-container w3-purple">
@@ -216,50 +138,11 @@ exports.studentFormEditPage = function(a, d){
 
 // ---------------Student's Page--------------------------------
 // Change and adapt to current dataset...
-exports.studentPage = function( aluno, d ){
-    var pagHTML = `
-    <html>
-    <head>
-        <title>Aluno: ${aluno.Id}</title>
-        <meta charset="utf-8"/>
-        <link rel="icon" href="favicon.png"/>
-        <link rel="stylesheet" href="w3.css"/>
-    </head>
-    <body>
-        <div class="w3-card-4">
-            <header class="w3-container w3-teal">
-                <h1>Aluno ${aluno.id}</h1>
-            </header>
-
-            <div class="w3-container">
-                <ul class="w3-ul w3-card-4" style="width:50%">
-                    <li><b>Nome: </b> ${aluno.nome}</li>
-                    <li><b>Número: </b> ${aluno.id}</li>
-                    <li><b>Git (link): </b> <a href="${aluno.gitlink}">${aluno.gitlink}</a></li>
-                </ul>
-            </div>
-            <div class="w3-container w3-margin-8">
-                <ul class="w3-ul">
-            `
-            for(let i=1; i < 9; i++){
-                key = `tpc${i}`
-                if(key in aluno){
-                    pagHTML += `
-                        <li><b>TPC${i}</b></li>
-                    `
-                }
-            }
-    
-
-    pagHTML +=     `</ul></div>
-            <footer class="w3-container w3-teal">
-                <address>Gerado por galuno::RPCW2022 em ${d} - [<a href="/">Voltar</a>]</address>
-            </footer>
-        </div>
-    </body>
-    </html>
+exports.confirmPage = function( func,task, d ){
+    return `
+    <p>${d}: Function ${func}: ${task}.</p>
+    <a href="http://localhost:7777/tasks">Done</a>
     `
-    return pagHTML
 }
 
 // -------------- Error Treatment ------------------------------

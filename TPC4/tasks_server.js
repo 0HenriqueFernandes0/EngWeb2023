@@ -57,40 +57,63 @@ var alunosServer = http.createServer(function (req, res) {
                 }
                 // GET /alunos/:id --------------------------------------------------------------------
                 // GET /alunos/registo --------------------------------------------------------------------
-                else if(req.url == "/alunos/registo"){
-                    // Add code to render page with the student form
-                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                    res.write(templates.studentFormPage(d))
-                    res.end()
-                }
-                // GET /alunos/edit/:id --------------------------------------------------------------------
-                else if(/\/alunos\/edit\/(A|PG)[0-9]+$/i.test(req.url)){
-                    var idAluno = req.url.split("/")[3]
+                else if(/\/tasks\/Done\/[0-9]+$/i.test(req.url)){
+                    var idtask = req.url.split("/")[3]
                     // Get aluno record
-                    axios.get('http://localhost:3000/alunos/' + idAluno)
+                    axios.get('http://localhost:3000/tasks/' + idtask)
                         .then(function(resp){
-                            var aluno = resp.data
-                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.end(templates.studentFormEditPage(aluno, d))
+                            var task = resp.data
+                            task["Done"]=1
+
+                            axios.put('http://localhost:3000/tasks/'+idtask, task)
+                                .then(resp => {
+                                    console.log(resp.data);
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                                    // res.write(studentFormPage(d))
+                                    res.end(templates.confirmPage("Done",idtask, d))
+                                })
+                                .catch(error => {
+                                    console.log('Erro: ' + error);
+                                    res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.write("<p>Unable to insert record..."+"</p>")
+                                    res.end()
+                                });
+
                         })
                         .catch(erro => {
                             console.log("Erro: " + erro)
                             res.writeHead(404, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.end(templates.errorPage("Unable to collect record: " + idAluno, d))
+                            res.end(templates.errorPage("Unable to collect record: " + idtask, d))
+                        })
+                }
+                // GET /alunos/edit/:id --------------------------------------------------------------------
+                else if(/\/tasks\/edit\/[0-9]+$/i.test(req.url)){
+                    var idtask = req.url.split("/")[3]
+                    // Get aluno record
+                    axios.get('http://localhost:3000/tasks/' + idtask)
+                        .then(function(resp){
+                            var task = resp.data
+                            res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.end(templates.tasksEditPage(task, d))
+                        })
+                        .catch(erro => {
+                            console.log("Erro: " + erro)
+                            res.writeHead(404, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.end(templates.errorPage("Unable to collect record: " + idtask, d))
                         })
                 }
                 // GET /alunos/delete/:id --------------------------------------------------------------------
-                else if(/\/alunos\/delete\/(A|PG)[0-9]+$/i.test(req.url)){
-                    var idAluno = req.url.split("/")[3]
-                    axios.delete('http://localhost:3000/alunos/' + idAluno)
+                else if(/\/tasks\/delete\/[0-9]+$/i.test(req.url)){
+                    var idtask = req.url.split("/")[3]
+                    axios.delete('http://localhost:3000/tasks/' + idtask)
                         .then(resp => {
-                            console.log("Delete " + idAluno + " :: " + resp.status);
+                            console.log("Delete " + idtask + " :: " + resp.status);
                             res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.end('<p>Registo apagado:' + idAluno  + '</p>')
+                            res.end(templates.confirmPage("delete",idtask, d))
                         }).catch(error => {
                             console.log('Erro: ' + error);
                             res.writeHead(404, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.end(templates.errorPage("Unable to delete record: " + idAluno, d))
+                            res.end(templates.errorPage("Unable to delete record: " + idtask, d))
                         })
                 }
                 else{
@@ -124,21 +147,22 @@ var alunosServer = http.createServer(function (req, res) {
                         }
                     })
                 }
-                else if(/\/?nome=([^&]*)&TaskDescription=([^&]*)&DateTask=(\d{4}-\d{2}-\d{2})$/i.test(req.url)){
+                if(/\/tasks\/edit\/[0-9]+$/i.test(req.url)){
+                    var idtask = req.url.split("/")[3]
                     collectRequestBodyData(req, result => {
                         if(result){
-                            console.dir(result)
-                            axios.put('http://localhost:3000/alunos/' + result.id, result)
+                            axios.put('http://localhost:3000/tasks/'+idtask, result)
                                 .then(resp => {
                                     console.log(resp.data);
-                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                    res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
                                     // res.write(studentFormPage(d))
-                                    res.end('<p>Registo alterado:' + JSON.stringify(resp.data)  + '</p>')
+                                    res.end(templates.confirmPage("Edit",idtask, d))
                                 })
                                 .catch(error => {
                                     console.log('Erro: ' + error);
                                     res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.end(templates.errorPage("Unable to insert record...", d))
+                                    res.write("<p>Unable to insert record...</p>")
+                                    res.end()
                                 });
                         }
                         else{
@@ -146,31 +170,7 @@ var alunosServer = http.createServer(function (req, res) {
                             res.write("<p>Unable to collect data from body...</p>")
                             res.end()
                         }
-                    });
-                }
-                else if(/\/alunos\/edit\/(A|PG)[0-9]+$/i.test(req.url)){
-                    collectRequestBodyData(req, result => {
-                        if(result){
-                            console.dir(result)
-                            axios.put('http://localhost:3000/alunos/' + result.id, result)
-                                .then(resp => {
-                                    console.log(resp.data);
-                                    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                                    // res.write(studentFormPage(d))
-                                    res.end('<p>Registo alterado:' + JSON.stringify(resp.data)  + '</p>')
-                                })
-                                .catch(error => {
-                                    console.log('Erro: ' + error);
-                                    res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
-                                    res.end(templates.errorPage("Unable to insert record...", d))
-                                });
-                        }
-                        else{
-                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
-                            res.write("<p>Unable to collect data from body...</p>")
-                            res.end()
-                        }
-                    });
+                    })
                 }
                 else{
                     res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
