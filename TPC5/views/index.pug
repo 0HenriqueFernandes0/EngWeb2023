@@ -1,12 +1,9 @@
-doctype html
-html
-  head
-    meta(charset="UTF-8")
-    link (rel="icon" href="favicon.png")
-    link (rel="stylesheet" href="w3.css"/)
+extends layout
+
+block content
   body
-    w3-container.w3-teal
-      h1 Input task
+    .w3-container.w3-teal
+      h4 Input task
     form.w3-container(method="post")
 
       label.w3-text-teal
@@ -24,9 +21,9 @@ html
       button.w3-btn.w3-blue.w3-mb-2(name="Done" value="0" type="submit") Submit
 
     header.w3-container.w3-teal
-      h3 Task List   
+      h1 Task List   
 
-    .w3-row.w3-colw3-containerm6l6
+    .w3-row.w3-col.w3-container.m6.l6
       table.w3-table-all
         tr
           th Nome
