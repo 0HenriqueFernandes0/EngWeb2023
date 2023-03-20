@@ -17,9 +17,11 @@ block content
       label.w3-text-teal
         b Choose the date limit to do the task
       input.w3-input.w3-border.w3-light-grey(type="date" name="DateTask" min="0" value="")
-                    
-      button.w3-btn.w3-blue.w3-mb-2(name="Done" value="0" type="submit") Submit
 
+      p          
+      button.w3-btn.w3-blue.w3-mb-2(name="Done" value="0" type="submit") Submit
+      p 
+      
     header.w3-container.w3-teal
       h1 Task List   
 
@@ -29,6 +31,7 @@ block content
           th Nome
           th Task Description
           th DateTask
+          th
         each task in t
           if task.Done==0
             tr
@@ -46,8 +49,9 @@ block content
           th Nome
           th Task Description
           th DateTask
+          th
         each task in t
-          if task.Done==1
+          if task.Done
             tr
               td #{task.nome}
               td #{task.TaskDescription}
