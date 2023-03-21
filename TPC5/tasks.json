@@ -8,24 +8,24 @@
       "Done": 1
     },
     {
-      "nome": "Henrique",
-      "TaskDescription": "cozinhar11",
+      "nome": "Henrique Fernandes",
+      "TaskDescription": "cozinhar carbonara",
       "DateTask": "2023-03-25",
-      "id": 4,
-      "Done": 0
+      "Done": "0",
+      "id": 4
     },
     {
       "nome": "Rui",
       "TaskDescription": "aspirar",
       "DateTask": "2023-03-29",
-      "Done": 1,
+      "Done": "0",
       "id": 6
     },
     {
-      "nome": "Henrique2",
-      "TaskDescription": "cozinhar11",
+      "nome": "Henrique Ribeiro",
+      "TaskDescription": "cozinhar",
       "DateTask": "2023-03-31",
-      "Done": 1,
+      "Done": "1",
       "id": 7
     },
     {
@@ -36,11 +36,18 @@
       "id": 8
     },
     {
-      "nome": "oi",
+      "nome": "Rui Oliveira",
       "TaskDescription": "barrer",
       "DateTask": "2023-03-29",
-      "Done": 1,
+      "Done": "1",
       "id": 9
+    },
+    {
+      "nome": "Andre",
+      "TaskDescription": "fazer a cama",
+      "DateTask": "2023-03-18",
+      "Done": "0",
+      "id": 10
     }
   ],
   "tasks_done": []

@@ -51,7 +51,7 @@ block content
           th DateTask
           th
         each task in t
-          if task.Done
+          if task.Done==1
             tr
               td #{task.nome}
               td #{task.TaskDescription}

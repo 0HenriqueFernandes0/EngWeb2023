@@ -15,11 +15,35 @@ router.get('(/|/tasks)', function(req, res, next) {
   
 });
 
-router.get('/tasks/Edit/:idTasks', function(req, res, next) {
+router.post('/|/tasks', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
-  Tasks.list()
+  Tasks.Register(req.body)
     .then(tasks => {
       res.render('index', { t: tasks, d: data });
+    })
+    .catch(erro => {
+      res.render('error', {error: erro, message: "Erro na obtenção da lista de tasks"})
+    })
+  
+});
+
+router.get('/tasks/Edit/:idTasks', function(req, res, next) {
+  var data = new Date().toISOString().substring(0, 16)
+  Tasks.Edit(req.params.idTasks)
+    .then(task => {
+      res.render('edit', { t: task, d: data });
+    })
+    .catch(erro => {
+      res.render('error', {error: erro, message: "Erro na obtenção da lista de tasks"})
+    })
+  
+});
+
+router.post('/tasks/Edit/:idTasks', function(req, res, next) {
+  var data = new Date().toISOString().substring(0, 16)
+  Tasks.EditPost(req.body,req.params.idTasks)
+    .then(task => {
+      res.render('edit', { t: task, d: data });
     })
     .catch(erro => {
       res.render('error', {error: erro, message: "Erro na obtenção da lista de tasks"})
