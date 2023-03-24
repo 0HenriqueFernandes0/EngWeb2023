@@ -11,14 +11,14 @@
       "nome": "Henrique Fernandes",
       "TaskDescription": "cozinhar carbonara",
       "DateTask": "2023-03-25",
-      "Done": "0",
+      "Done": 1,
       "id": 4
     },
     {
       "nome": "Rui",
       "TaskDescription": "aspirar",
       "DateTask": "2023-03-29",
-      "Done": "0",
+      "Done": 1,
       "id": 6
     },
     {
@@ -46,8 +46,22 @@
       "nome": "Andre",
       "TaskDescription": "fazer a cama",
       "DateTask": "2023-03-18",
-      "Done": "0",
+      "Done": 1,
       "id": 10
+    },
+    {
+      "nome": "Rui Oliveira",
+      "TaskDescription": "barrer",
+      "DateTask": "2023-03-29",
+      "Done": "0",
+      "id": 11
+    },
+    {
+      "nome": "Andre",
+      "TaskDescription": "cozinhar",
+      "DateTask": "",
+      "Done": "0",
+      "id": 12
     }
   ],
   "tasks_done": []
