@@ -34,7 +34,7 @@ module.exports.addEmd = e => {
 }
 
 module.exports.updateEmd = e => {
-    return Emd.updateOne({_id: p._id}, e)
+    return Emd.updateOne({_id: e._id}, e)
         .then(dados => {
             return dados
         })

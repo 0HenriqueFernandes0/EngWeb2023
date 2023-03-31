@@ -15,7 +15,7 @@ for person in pessoas:
     # Check if the person already exists in the database
     exists = requests.get("http://localhost:3000/emd/" + person["_id"])
     print(exists)
-    if exists == None:
+    if exists.status_code == 404:
         # Insert the new record
         requests.post("http://localhost:3000/emd", json=person)
     else:

@@ -11,7 +11,12 @@ router.get('/emd', function(req, res, next) {
 
 router.get('/emd/:id', function(req, res, next) {
   Emd.getEmd(req.params.id)
-    .then(dados => res.status(201).json(dados))
+    .then(dados => {
+      if(dados==null)
+        res.status(404).json(dados)
+      else
+        res.status(201).json(dados)
+    })
     .catch(erro => res.status(602).json({erro: erro}))
 });
 
